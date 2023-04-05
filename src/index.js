@@ -1,5 +1,7 @@
 
 import Pizza from "./models/pizza.js"
-import { get2Pizzas} from "./services/pizzaService.js";
-await get2Pizzas()
-
+import { AgregarPizza, EliminarPizza, ObtenerPizzas, ObtenerPizzasById} from "./services/pizzaService.js";
+await AgregarPizza()
+await ObtenerPizzas()
+await ObtenerPizzasById(1)
+await EliminarPizza(18)

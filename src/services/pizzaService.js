@@ -2,7 +2,7 @@
 import Pizza from '../models/pizza.js'
 import sql from 'mssql';
 import configDB from '../models/DB.js'
-export const get2Pizzas = async () =>
+export const AgregarPizza = async () =>
 {
    const connection = await sql.connect(configDB)
    const pizza = new Pizza();
@@ -21,7 +21,26 @@ export const get2Pizzas = async () =>
    console.log(results);
 }
 
+export const ObtenerPizzas = async () => {
+    const conn = await sql.connect(configDB);
+    const results = await conn.request().query('SELECT * FROM Pizzas');
 
+    console.log(results);
+}
+export const ObtenerPizzasById = async (Id) => {
+    const conn = await sql.connect(configDB);
+    const results = await conn.request().input("pId", Id)
+    .query('SELECT * FROM Pizzas WHERE Id = @pId');
+
+    console.log(results);
+}
+export const EliminarPizza = async (Id) => {
+    const conn = await sql.connect(configDB);
+    const results = await conn.request().input("pId", Id)
+    .query('DELETE FROM Pizzas WHERE Id = @pId');
+
+    console.log(results);
+}
 
 
 /*//export const get2Pizzas = async () => {
