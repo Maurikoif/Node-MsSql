@@ -1,8 +1,8 @@
 const config = {
     user: 'Pizzas',
     password: 'Pizzas',
-    server:'A-PHZ2-CEO-018',
-    database:'Dai-Pizzas-2',
+    server:'A-PHZ2-AMI-014',
+    database:'Dai-Pizzas',
     options : {
         trustServerCertificate  : true,
         trustedConnection       : true,
