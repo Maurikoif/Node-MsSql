@@ -2,12 +2,18 @@
 import Pizza from '../models/pizza.js'
 import sql from 'mssql';
 import configDB from '../models/DB.js'
-export const get2Pizzas = async () =>
+export const whereCondition = async () =>
 {
    const connection = await sql.connect(configDB)
-   const results = await connection.request().query('SELECT TOP 2 * FROM Pizzas');
+   const results = await connection.request().input("whereCondition, %eta%").query('SELECT TOP 2 * FROM Pizzas WHERE Pizzas.nombre = whereCondition');
 
    console.log(results);
+}
+export const get2Pizzas = async () => {
+    const conn = await sql.connect(configDB);
+    const results = await conn.request().query('SELECT TOP 2 * FROM Pizzas');
+
+    console.log(results);
 }
 
 
