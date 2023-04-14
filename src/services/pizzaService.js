@@ -2,19 +2,17 @@
 import Pizza from '../models/pizza.js'
 import sql from 'mssql';
 import configDB from '../models/DB.js'
-export const AgregarPizza = async () =>
+
+export const AgregarPizza = async (pizza) =>
 {
    const connection = await sql.connect(configDB)
-   const pizza = new Pizza();
-   pizza.nombre = 'Test';
-   pizza.descripcion = 'Test';
-   pizza.precio = 1000;
-   pizza.libreDeGluten = false;
+   
+   
    const results = await connection.request()
-   .input("pNombre", pizza.nombre)
-   .input("pDescripcion", pizza.descripcion)
-   .input("pLibreGluten", pizza.libreDeGluten)
-   .input("pImporte", pizza.precio)
+   .input("pNombre", sql.VarChar, pizza.nombre)
+   .input("pDescripcion", sql.VarChar, pizza.descripcion)
+   .input("pLibreGluten", sql.Bit, pizza.libreDeGluten)
+   .input("pImporte", sql.Int, pizza.precio)
    
    .query('INSERT INTO Pizzas (Nombre, Descripcion, LibreGluten, Importe) VALUES (@pNombre, @pDescripcion, @pLibreGluten, @pImporte)');
 
@@ -25,18 +23,19 @@ export const ObtenerPizzas = async () => {
     const conn = await sql.connect(configDB);
     const results = await conn.request().query('SELECT * FROM Pizzas');
 
-    console.log(results);
+    return results.recordset;
 }
 export const ObtenerPizzasById = async (Id) => {
     const conn = await sql.connect(configDB);
-    const results = await conn.request().input("pId", Id)
+    console.log(Id)
+    const results = await conn.request().input("pId", sql.Int, Id)
     .query('SELECT * FROM Pizzas WHERE Id = @pId');
 
-    console.log(results);
+    return results.recordset;
 }
 export const EliminarPizza = async (Id) => {
     const conn = await sql.connect(configDB);
-    const results = await conn.request().input("pId", Id)
+    const results = await conn.request().input("pId", sql.Int, Id)
     .query('DELETE FROM Pizzas WHERE Id = @pId');
 
     console.log(results);
