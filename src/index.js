@@ -40,3 +40,10 @@ app.delete('/:id', async (req, res) =>{
 app.listen(port, () => {
     console.log('Ejemplo')
 })
+app.use(express.json());
+app.put ('/api/:id', async (req, res)=> {
+const id = req.params.id;
+console.log(id)
+const pizza =req.body;
+return res.status(200).json(pizza)
+})

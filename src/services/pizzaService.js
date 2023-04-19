@@ -28,14 +28,14 @@ export const ObtenerPizzas = async () => {
 export const ObtenerPizzasById = async (Id) => {
     const conn = await sql.connect(configDB);
     console.log(Id)
-    const results = await conn.request().input("pId", sql.Int, Id)
+    const results = await conn.request().input("pId", sql.Int, Number(Id))
     .query('SELECT * FROM Pizzas WHERE Id = @pId');
 
     return results.recordset;
 }
 export const EliminarPizza = async (Id) => {
     const conn = await sql.connect(configDB);
-    const results = await conn.request().input("pId", sql.Int, Id)
+    const results = await conn.request().input("pId", sql.Int, Number(Id))
     .query('DELETE FROM Pizzas WHERE Id = @pId');
 
     console.log(results);
