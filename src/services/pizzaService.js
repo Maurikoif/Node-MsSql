@@ -40,7 +40,17 @@ export const EliminarPizza = async (Id) => {
 
     console.log(results);
 }
-
+export const UpdatePizza = async (pizza, id) => {
+    const conn = await sql.connect(configDB);
+    const result = await conn.request()
+    .input('pId', sql.Int, id)
+    .input('pNombre', sql.VarChar, pizza.nombre)
+    .input('pLibreGluten', sql.Bit, pizza.libreDeGluten)
+    .input('pImporte', sql.Int, pizza.precio)
+    .input('pDescripcion', sql.VarChar, pizza.descripcion)
+    .query('UPDATE Pizzas SET Nombre = @pNombre, Descripcion = @pDescripcion, LibreGluten =  @pLibreGluten, Importe = @pImporte WHERE Id = @pId')
+    console.log(result);
+}
 
 /*//export const get2Pizzas = async () => {
     const conn = await sql.connect(configDB);

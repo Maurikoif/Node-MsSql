@@ -1,10 +1,11 @@
 
 import Pizza from "./models/pizza.js"
-import { AgregarPizza, EliminarPizza, ObtenerPizzas, ObtenerPizzasById} from "./services/pizzaService.js";
+import { AgregarPizza, EliminarPizza, ObtenerPizzas, ObtenerPizzasById, UpdatePizza} from "./services/pizzaService.js";
 
 import express from "express"
 
 const app = express()
+app.use(express.json());
 const port = 3000
 
 app.get('/', async (req, res) =>{
@@ -40,10 +41,17 @@ app.delete('/:id', async (req, res) =>{
 app.listen(port, () => {
     console.log('Ejemplo')
 })
-app.use(express.json());
+
 app.put ('/api/:id', async (req, res)=> {
+    
 const id = req.params.id;
 console.log(id)
-const pizza =req.body;
+let pizza = new Pizza();
+pizza.nombre = req.body.nombre
+pizza.descripcion = req.body.descripcion
+pizza.precio = req.body.precio
+pizza.libreDeGluten = req.body.libreDeGluten
+const updatePizza = await UpdatePizza(pizza, id)
 return res.status(200).json(pizza)
+
 })
